@@ -11,8 +11,9 @@
     }
   },
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "npm run clean && rollup -c"
+    "build:rollup": "rollup -c",
+    "build:ts": "tsc",
+    "build": "npm run build:ts && npm run build:rollup"
   },
   "keywords": [
     "wordpress",
