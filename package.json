@@ -27,6 +27,11 @@
   "author": "Mehul Gediya",
   "license": "MIT",
   "devDependencies": {
-    "rollup": "^3.0.0"
+    "@rollup/plugin-typescript": "^12.1.2",
+    "rollup": "^3.29.5",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
   }
 }
