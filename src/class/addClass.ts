@@ -1,10 +1,10 @@
 export function addClass(
-  element: Element | NodeListOf<Element> | Element[],
+  element: Element | Element[] | NodeListOf<Element>,
   className: string
 ): void {
-  const elements = element instanceof NodeList || Array.isArray(element)
-    ? Array.from(element)
-    : [element];
-
-  elements.forEach((el) => el.classList.add(className));
+  if (element instanceof Element) {
+    element.classList.add(className);
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    [...element].forEach((el) => el.classList.add(className));
+  }
 }
