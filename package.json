@@ -1,6 +1,6 @@
 {
   "name": "wpnestjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vanilla JavaScript DOM utilities for WordPress-like environments",
   "main": "dist/index.js",
   "module": "dist/index.js",
