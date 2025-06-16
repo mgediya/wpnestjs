@@ -1,5 +1,9 @@
+export function closest(
+  el: string | Element,
+  selector: string
+): Element | null {
+  const element =
+    typeof el === 'string' ? document.querySelector(el) : el;
 
-// src/dom/closest.ts
-export function closest(el: Element, selector: string): Element | null {
-  return el.closest(selector);
+  return element?.closest(selector) || null;
 }

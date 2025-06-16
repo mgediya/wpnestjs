@@ -1,4 +1,10 @@
-// src/dom/hide.ts
-export function hide(el: HTMLElement): void {
-  el.style.display = 'none';
+import { resolveElements } from '../utils/resolveElements';
+
+export function hide(
+  element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>
+): void {
+  const elements = resolveElements(element);
+  elements.forEach((el) => {
+    el.style.display = 'none';
+  });
 }

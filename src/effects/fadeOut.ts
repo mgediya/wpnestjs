@@ -1,19 +1,28 @@
-// src/effects/fadeOut.ts
-export function fadeOut(el: HTMLElement, duration: number = 400): void {
-  el.style.opacity = '1';
+import { resolveElements } from '../utils/resolveElements';
 
-  let last = +new Date();
-  const tick = () => {
-    const now = +new Date();
-    const delta = (now - last) / duration;
-    el.style.opacity = (parseFloat(el.style.opacity) - delta).toString();
-    last = now;
+export function fadeOut(
+  element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
+  duration: number = 400
+): void {
+  const elements = resolveElements<HTMLElement>(element);
 
-    if (parseFloat(el.style.opacity) > 0) {
-      requestAnimationFrame(tick);
-    } else {
-      el.style.display = 'none';
-    }
-  };
-  tick();
+  elements.forEach((el) => {
+    el.style.opacity = '1';
+
+    let last = +new Date();
+    const tick = () => {
+      const now = +new Date();
+      const delta = (now - last) / duration;
+      el.style.opacity = (parseFloat(el.style.opacity) - delta).toString();
+      last = now;
+
+      if (parseFloat(el.style.opacity) > 0) {
+        requestAnimationFrame(tick);
+      } else {
+        el.style.display = 'none';
+      }
+    };
+
+    tick();
+  });
 }

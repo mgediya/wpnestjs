@@ -1,7 +1,15 @@
-// src/dom/find.ts
 export function find(
   selector: string,
-  context: Document | Element = document
+  context: string | Document | Element = document
 ): NodeListOf<Element> {
-  return context.querySelectorAll(selector);
+  let ctx: Document | Element = document;
+
+  if (typeof context === 'string') {
+    const found = document.querySelector(context);
+    if (found) ctx = found;
+  } else {
+    ctx = context;
+  }
+
+  return ctx.querySelectorAll(selector);
 }
