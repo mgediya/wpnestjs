@@ -1,10 +1,17 @@
-import { resolveElements } from '../utils/resolveElements';
-
 export function hide(
-  element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>
+  element: string | Element | Element[] | NodeListOf<Element>
 ): void {
-  const elements = resolveElements(element);
+  let elements: Element[] = [];
+
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll(element));
+  } else if (element instanceof Element) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
+  }
+
   elements.forEach((el) => {
-    el.style.display = 'none';
+    (el as HTMLElement).style.display = 'none';
   });
 }

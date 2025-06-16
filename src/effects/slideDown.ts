@@ -1,10 +1,16 @@
-import { resolveElements } from '../utils/resolveElements';
-
 export function slideDown(
   element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
   duration: number = 400
 ): void {
-  const elements = resolveElements<HTMLElement>(element);
+  let elements: HTMLElement[] = [];
+
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll<HTMLElement>(element));
+  } else if (element instanceof HTMLElement) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
+  }
 
   elements.forEach((el) => {
     el.style.removeProperty('display');
@@ -25,6 +31,16 @@ export function slideDown(
     el.offsetHeight; // force reflow
 
     el.style.transition = `height ${duration}ms, padding ${duration}ms, margin ${duration}ms`;
-    el.style.height = height + 'px';
+    el.style.height = `${height}px`;
+
+    setTimeout(() => {
+      el.style.removeProperty('height');
+      el.style.removeProperty('overflow');
+      el.style.removeProperty('transition');
+      el.style.removeProperty('padding-top');
+      el.style.removeProperty('padding-bottom');
+      el.style.removeProperty('margin-top');
+      el.style.removeProperty('margin-bottom');
+    }, duration);
   });
 }

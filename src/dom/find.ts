@@ -1,15 +1,21 @@
 export function find(
-  selector: string,
-  context: string | Document | Element = document
-): NodeListOf<Element> {
-  let ctx: Document | Element = document;
+  element: string | Element | Element[] | NodeListOf<Element>,
+  selector: string
+): Element[] {
+  let elements: Element[] = [];
 
-  if (typeof context === 'string') {
-    const found = document.querySelector(context);
-    if (found) ctx = found;
-  } else {
-    ctx = context;
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll(element));
+  } else if (element instanceof Element) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
   }
 
-  return ctx.querySelectorAll(selector);
+  const found: Element[] = [];
+  elements.forEach((el) => {
+    found.push(...Array.from(el.querySelectorAll(selector)));
+  });
+
+  return found;
 }

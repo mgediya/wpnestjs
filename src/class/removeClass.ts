@@ -1,11 +1,23 @@
-import { resolveElements } from '../utils/resolveElements';
-
 export function removeClass(
   element: string | Element | Element[] | NodeListOf<Element>,
-  className: string
+  classNames: string
 ): void {
-  const elements = resolveElements(element);
-  elements.forEach((el: Element) => {
-    el.classList.remove(className);
+  let elements: Element[] = [];
+
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll(element));
+  } else if (element instanceof Element) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
+  }
+
+  // Support comma or space-separated class names
+  const classList = classNames.split(/[\s,]+/).filter(Boolean);
+
+  elements.forEach((el) => {
+    classList.forEach((cls) => {
+      el.classList.remove(cls);
+    });
   });
 }

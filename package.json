@@ -1,4 +1,12 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgediya/wpnestjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mgediya/wpnestjs/issues"
+  },
+  "homepage": "https://github.com/mgediya/wpnestjs#readme",
   "name": "wpnestjs",
   "version": "1.0.4",
   "description": "Vanilla JavaScript DOM utilities for WordPress-like environments",

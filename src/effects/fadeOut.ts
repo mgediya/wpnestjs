@@ -1,28 +1,24 @@
-import { resolveElements } from '../utils/resolveElements';
-
 export function fadeOut(
-  element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
+  element: string | Element | Element[] | NodeListOf<Element>,
   duration: number = 400
 ): void {
-  const elements = resolveElements<HTMLElement>(element);
+  let elements: Element[] = [];
+
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll(element));
+  } else if (element instanceof Element) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
+  }
 
   elements.forEach((el) => {
-    el.style.opacity = '1';
+    const htmlEl = el as HTMLElement;
+    htmlEl.style.transition = `opacity ${duration}ms`;
+    htmlEl.style.opacity = '0';
 
-    let last = +new Date();
-    const tick = () => {
-      const now = +new Date();
-      const delta = (now - last) / duration;
-      el.style.opacity = (parseFloat(el.style.opacity) - delta).toString();
-      last = now;
-
-      if (parseFloat(el.style.opacity) > 0) {
-        requestAnimationFrame(tick);
-      } else {
-        el.style.display = 'none';
-      }
-    };
-
-    tick();
+    setTimeout(() => {
+      htmlEl.style.display = 'none';
+    }, duration);
   });
 }

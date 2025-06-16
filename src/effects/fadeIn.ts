@@ -1,27 +1,25 @@
-import { resolveElements } from '../utils/resolveElements';
-
 export function fadeIn(
-  element: string | HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
+  element: string | Element | Element[] | NodeListOf<Element>,
   duration: number = 400
 ): void {
-  const elements = resolveElements<HTMLElement>(element);
+  let elements: Element[] = [];
+
+  if (typeof element === 'string') {
+    elements = Array.from(document.querySelectorAll(element));
+  } else if (element instanceof Element) {
+    elements = [element];
+  } else if (element instanceof NodeList || Array.isArray(element)) {
+    elements = Array.from(element);
+  }
 
   elements.forEach((el) => {
-    el.style.opacity = '0';
-    el.style.display = '';
+    const htmlEl = el as HTMLElement;
+    htmlEl.style.opacity = '0';
+    htmlEl.style.display = 'block';
+    htmlEl.style.transition = `opacity ${duration}ms`;
 
-    let last = +new Date();
-    const tick = () => {
-      const now = +new Date();
-      const delta = (now - last) / duration;
-      el.style.opacity = (parseFloat(el.style.opacity) + delta).toString();
-      last = now;
-
-      if (parseFloat(el.style.opacity) < 1) {
-        requestAnimationFrame(tick);
-      }
-    };
-
-    tick();
+    requestAnimationFrame(() => {
+      htmlEl.style.opacity = '1';
+    });
   });
 }
