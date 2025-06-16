@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/mgediya/wpnestjs#readme",
   "name": "wpnestjs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Vanilla JavaScript DOM utilities for WordPress-like environments",
   "main": "dist/index.js",
   "module": "dist/index.js",
